@@ -28,7 +28,7 @@ jobs:
       - name: Get OS info
         run: |
           BINARY_NAME=random-standup-$(echo ${{matrix.os}} | sed 's/-latest//')
-          echo "BINARY_NAME=$BINARY_NAME >> $GITHUB_ENV
+          echo "BINARY_NAME=$BINARY_NAME" >> $GITHUB_ENV
       - name: Build
         run: |
           go build -o "$BINARY_NAME"
