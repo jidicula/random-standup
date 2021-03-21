@@ -1,6 +1,6 @@
 # 🎲random-standup🎲
 Do you have awkward pauses in your standups because no one wants to give their
-update? Why not have a defined order? To make it fair, why not also
+update next? Why not have a defined order? To make it fair, why not also
 🎲randomize🎲 that order!
 
 ## Usage
