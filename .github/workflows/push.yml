@@ -1,0 +1,32 @@
+on:
+  push: [main]
+  pull_request: [main]
+
+name: Push
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - 'ubuntu-latest'
+          - 'macos-latest'
+          - 'windows-latest'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get OS info
+        run: |
+          BINARY_NAME=random-standup-$(echo ${{matrix.os}} | sed 's/-latest//')
+          echo "BINARY_NAME=$BINARY_NAME >> $GITHUB_ENV
+      - name: Build
+        run: |
+          go build -o "$BINARY_NAME"
