@@ -7,7 +7,8 @@ update next? Why not have a defined order? To make it fair, why not also
 
 1. Build the tool with `go build -o random-standup`
 
-2. Create a team roster in a TOML file, following the format in `example.toml`:
+2. Create a team roster in a TOML file, following the format in
+`example-roster.toml`:
 ```toml
 [Subteam-1]
 members = ["Alice", "Bob", "Carol", "David"]
