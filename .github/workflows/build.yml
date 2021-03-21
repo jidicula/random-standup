@@ -11,8 +11,8 @@ defaults:
     shell: bash
 
 jobs:
-  release:
-    name: Create Release
+  build:
+    name: Build binary
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
