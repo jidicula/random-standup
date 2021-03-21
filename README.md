@@ -17,3 +17,20 @@ members = ["Erin", "Frank", "Grace", "Heidi"]
 ```
 
 3. `./random-standup example-roster.toml`
+
+## Output
+```
+$ ./random-standup example-roster.toml
+# 2021-03-21
+## Subteam-1
+David
+Bob
+Carol
+Alice
+
+## Subteam-2
+Frank
+Erin
+Heidi
+Grace
+```
