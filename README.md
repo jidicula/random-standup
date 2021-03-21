@@ -16,4 +16,4 @@ members = ["Alice", "Bob", "Carol", "David"]
 members = ["Erin", "Frank", "Grace", "Heidi"]
 ```
 
-3. `./random-standup example.toml`
+3. `./random-standup example-roster.toml`
