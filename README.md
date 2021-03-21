@@ -5,7 +5,9 @@ update? Why not have a defined order? To make it fair, why not also
 
 ## Usage
 
-1. Create a team roster in a TOML file, following the format in `example.toml`:
+1. Build the tool with `go build -o random-standup`
+
+2. Create a team roster in a TOML file, following the format in `example.toml`:
 ```toml
 [Subteam-1]
 members = ["Alice", "Bob", "Carol", "David"]
@@ -14,4 +16,4 @@ members = ["Alice", "Bob", "Carol", "David"]
 members = ["Erin", "Frank", "Grace", "Heidi"]
 ```
 
-2. `go run Main.go example.toml`
+3. `./random-standup example.toml`
