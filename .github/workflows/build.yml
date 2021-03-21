@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
 
-name: Push
+name: Build
 
 defaults:
   run:
