@@ -1,4 +1,4 @@
-module standup
+module random-standup
 
 go 1.16
 
