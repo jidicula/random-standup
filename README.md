@@ -15,7 +15,7 @@ You can sponsor me [here](https://github.com/sponsors/jidicula)!
 
 ## Usage
 
-1. Build the tool with `go build -o random-standup`
+1. Get the tool with `GO111MODULE=on go get github.com/jidicula/random-standup`
 
 2. Create a team roster in a TOML file, following the format in
 `example-roster.toml`:
