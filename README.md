@@ -27,7 +27,7 @@ members = ["Alice", "Bob", "Carol", "David"]
 members = ["Erin", "Frank", "Grace", "Heidi"]
 ```
 
-3. `./random-standup example-roster.toml`
+3. `random-standup example-roster.toml`
 
 ## Output
 ```
@@ -45,3 +45,9 @@ Erin
 Heidi
 Grace
 ```
+
+## Building from `main`
+
+1. Clone and `cd` into the repo.
+2. `go build -v`
+3. `./random-standup example-roster.toml`
