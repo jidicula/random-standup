@@ -5,6 +5,14 @@ Do you have awkward pauses in your standups because no one wants to give their
 update next? Why not have a defined order? To make it fair, why not also
 🎲randomize🎲 that order!
 
+### Do you find this useful?
+
+Star this repo!
+
+### Do you find this *really* useful?
+
+You can sponsor me [here](https://github.com/sponsors/jidicula)!
+
 ## Usage
 
 1. Build the tool with `go build -o random-standup`
