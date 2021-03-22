@@ -1,3 +1,5 @@
+[![Build](https://github.com/jidicula/random-standup/actions/workflows/build.yml/badge.svg)](https://github.com/jidicula/random-standup/actions/workflows/build.yml)
+
 # 🎲random-standup🎲
 Do you have awkward pauses in your standups because no one wants to give their
 update next? Why not have a defined order? To make it fair, why not also
