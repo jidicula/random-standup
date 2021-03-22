@@ -21,9 +21,14 @@ You can sponsor me [here](https://github.com/sponsors/jidicula)!
 `example-roster.toml`:
 ```toml
 [Subteam-1]
-members = ["Alice", "Bob", "Carol", "David"]
+members = [
+        "Alice",                # TOML spec allows whitespace to break arrays
+        "Bob",
+        "Carol",
+        "David"
+        ]
 
-[Subteam-2]
+["Subteam 2"]                   # Keys can have whitespace in quoted strings
 members = ["Erin", "Frank", "Grace", "Heidi"]
 ```
 
@@ -39,7 +44,7 @@ Bob
 Carol
 Alice
 
-## Subteam-2
+## Subteam 2
 Frank
 Erin
 Heidi
