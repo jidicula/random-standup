@@ -1,4 +1,4 @@
-module random-standup
+module github.com/jidicula/random-standup
 
 go 1.16
 
