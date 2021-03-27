@@ -30,6 +30,14 @@ members = [
 
 ["Subteam 2"]                   # Keys can have whitespace in quoted strings
 members = ["Erin", "Frank", "Grace", "Heidi"]
+
+["Subteam 3"]
+members = [
+        "Ivan",
+        "Judy",
+        "Mallory",
+        "Niaj"
+]
 ```
 
 3. `random-standup example-roster.toml`
@@ -37,18 +45,24 @@ members = ["Erin", "Frank", "Grace", "Heidi"]
 ## Output
 ```
 $ random-standup example-roster.toml
-# 2021-03-21
+# 2021-03-27
 ## Subteam-1
+Alice
 David
 Bob
 Carol
-Alice
 
 ## Subteam 2
+Grace
+Heidi
 Frank
 Erin
-Heidi
-Grace
+
+## Subteam 3
+Judy
+Niaj
+Ivan
+Mallory
 ```
 
 ## Building from `main`
