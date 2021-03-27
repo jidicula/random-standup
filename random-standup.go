@@ -1,34 +1,5 @@
-/*
-
-random-standup is a tool for randomizing the order of team member updates in a
-standup meeting.
-
-Usage:
-
-    random-standup <roster TOML>
-
-Example:
-
-    $ random-standup example-roster.toml
-    # 2021-03-27
-    ## Subteam-1
-    Alice
-    David
-    Bob
-    Carol
-
-    ## Subteam 2
-    Grace
-    Heidi
-    Frank
-    Erin
-
-    ## Subteam 3
-    Judy
-    Niaj
-    Ivan
-    Mallory
-*/
+// random-standup is a tool for randomizing the order of team member updates in
+// a standup meeting.
 package main
 
 import (
@@ -61,6 +32,8 @@ Example:
 
     ["Subteam 2"]                   # Keys can have whitespace in quoted strings
     members = ["Erin", "Frank", "Grace", "Heidi"]
+
+    ["Empty Subteam"]               # Subteam with 0 members won't be printed
 
     ["Subteam 3"]
     members = [
@@ -125,8 +98,11 @@ func main() {
 		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
 	})
 	for i, subteam := range subteams {
-		members := roster.GetArray(subteam + ".members").([]string)
-		printShuffledList([]string(members), subteam)
+		members := roster.GetArray(subteam + ".members")
+		if members == nil {
+			continue
+		}
+		printShuffledList(members.([]string), subteam)
 		if i != len(subteams)-1 {
 			fmt.Println()
 		}

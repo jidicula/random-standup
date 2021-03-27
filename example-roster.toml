@@ -9,6 +9,8 @@ members = [
 ["Subteam 2"]                   # Keys can have whitespace in quoted strings
 members = ["Erin", "Frank", "Grace", "Heidi"]
 
+["Empty Subteam"]               # Subteam with 0 members won't be printed
+
 ["Subteam 3"]
 members = [
         "Ivan",
