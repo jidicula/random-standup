@@ -102,26 +102,28 @@ func main() {
 		if members == nil {
 			continue
 		}
-		printShuffledList(members.([]string), subteam)
+		shuffledTeam := shuffleTeam(members.([]string), subteam)
+		fmt.Printf("%s", shuffledTeam)
+
 		if i != len(subteams)-1 {
 			fmt.Println()
 		}
 	}
 }
 
-// printShuffledList accepts a team's member list and name and prints a team's
-// name and a randomized list of its members to stdout.
-func printShuffledList(teamMembers []string, teamName string) {
+// shuffleTeam accepts a team's member list and name and returns the
+// shuffled, stringified team list beginning with the team name.
+func shuffleTeam(teamMembers []string, teamName string) string {
 
 	rand.Shuffle(len(teamMembers), func(i, j int) {
 		teamMembers[i], teamMembers[j] = teamMembers[j], teamMembers[i]
 	})
-
-	fmt.Printf("## %s\n", teamName)
+	list := fmt.Sprintf("## %s\n", teamName)
 
 	for _, name := range teamMembers {
-		fmt.Println(name)
+		list += name + "\n"
 	}
+	return list
 }
 
 // usageAndExit prints usage string and exits with nonzero code.
