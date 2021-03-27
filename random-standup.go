@@ -90,7 +90,12 @@ func main() {
 	rand.Seed(now.UnixNano())
 
 	fmt.Printf("# %s\n", now.Format("2006-01-02"))
+	fmt.Printf("%s\n", standupOrder(roster))
+}
 
+// standupOrder returns the randomized standup order from a toml.Tree.
+func standupOrder(roster *toml.Tree) string {
+	var order string
 	subteams := getSortedKeys(roster)
 	for i, subteam := range subteams {
 		members := roster.GetArray(subteam + ".members")
@@ -98,12 +103,13 @@ func main() {
 			continue
 		}
 		shuffledTeam := shuffleTeam(members.([]string), subteam)
-		fmt.Printf("%s", shuffledTeam)
+		order += shuffledTeam
 
 		if i != len(subteams)-1 {
-			fmt.Println()
+			order += "\n"
 		}
 	}
+	return order
 }
 
 // getSortedKeys returns a slice of keys from the TOML sorted by their position
