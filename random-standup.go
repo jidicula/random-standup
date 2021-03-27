@@ -43,6 +43,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"sort"
 	"time"
 
 	"github.com/pelletier/go-toml"
@@ -63,6 +64,11 @@ func main() {
 	fmt.Printf("# %s\n", now.Format("2006-01-02"))
 
 	subteams := roster.Keys()
+	// Tree key order is not guaranteed, so slice of keys has to be sorted
+	// by key position in TOML
+	sort.Slice(subteams, func(i, j int) bool {
+		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
+	})
 	for i, subteam := range subteams {
 		members := roster.GetArray(subteam + ".members").([]string)
 		printShuffledList([]string(members), subteam)
