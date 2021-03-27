@@ -91,12 +91,7 @@ func main() {
 
 	fmt.Printf("# %s\n", now.Format("2006-01-02"))
 
-	subteams := roster.Keys()
-	// Tree key order is not guaranteed, so slice of keys has to be sorted
-	// by key position in TOML
-	sort.Slice(subteams, func(i, j int) bool {
-		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
-	})
+	subteams := getSortedKeys(roster)
 	for i, subteam := range subteams {
 		members := roster.GetArray(subteam + ".members")
 		if members == nil {
@@ -109,6 +104,18 @@ func main() {
 			fmt.Println()
 		}
 	}
+}
+
+// getSortedKeys returns a slice of keys from the TOML sorted by their position
+// in the TOML.
+func getSortedKeys(roster *toml.Tree) []string {
+	subteams := roster.Keys()
+	// Tree key order is not guaranteed, so slice of keys has to be
+	// explicitly sorted
+	sort.Slice(subteams, func(i, j int) bool {
+		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
+	})
+	return subteams
 }
 
 // shuffleTeam accepts a team's member list and name and returns the
