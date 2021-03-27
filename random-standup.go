@@ -1,34 +1,5 @@
-/*
-
-random-standup is a tool for randomizing the order of team member updates in a
-standup meeting.
-
-Usage:
-
-    random-standup <roster TOML>
-
-Example:
-
-    $ random-standup example-roster.toml
-    # 2021-03-27
-    ## Subteam-1
-    Alice
-    David
-    Bob
-    Carol
-
-    ## Subteam 2
-    Grace
-    Heidi
-    Frank
-    Erin
-
-    ## Subteam 3
-    Judy
-    Niaj
-    Ivan
-    Mallory
-*/
+// random-standup is a tool for randomizing the order of team member updates in
+// a standup meeting.
 package main
 
 import (
@@ -61,6 +32,8 @@ Example:
 
     ["Subteam 2"]                   # Keys can have whitespace in quoted strings
     members = ["Erin", "Frank", "Grace", "Heidi"]
+
+    ["Empty Subteam"]               # Subteam with 0 members won't be printed
 
     ["Subteam 3"]
     members = [
