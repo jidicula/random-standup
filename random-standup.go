@@ -125,8 +125,11 @@ func main() {
 		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
 	})
 	for i, subteam := range subteams {
-		members := roster.GetArray(subteam + ".members").([]string)
-		printShuffledList([]string(members), subteam)
+		members := roster.GetArray(subteam + ".members")
+		if members == nil {
+			continue
+		}
+		printShuffledList(members.([]string), subteam)
 		if i != len(subteams)-1 {
 			fmt.Println()
 		}
