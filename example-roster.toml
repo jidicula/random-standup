@@ -8,3 +8,11 @@ members = [
 
 ["Subteam 2"]                   # Keys can have whitespace in quoted strings
 members = ["Erin", "Frank", "Grace", "Heidi"]
+
+["Subteam 3"]
+members = [
+        "Ivan",
+        "Judy",
+        "Mallory",
+        "Niaj"
+]
