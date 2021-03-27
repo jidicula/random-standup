@@ -5,7 +5,47 @@ standup meeting.
 
 Usage:
 
-    random-standup <roster>
+    random-standup <roster TOML>
+
+Example:
+
+    $ random-standup example-roster.toml
+    # 2021-03-27
+    ## Subteam-1
+    Alice
+    David
+    Bob
+    Carol
+
+    ## Subteam 2
+    Grace
+    Heidi
+    Frank
+    Erin
+
+    ## Subteam 3
+    Judy
+    Niaj
+    Ivan
+    Mallory
+*/
+package main
+
+import (
+	"flag"
+	"fmt"
+	"math/rand"
+	"os"
+	"sort"
+	"time"
+
+	"github.com/pelletier/go-toml"
+)
+
+var usage = `Usage: random-standup [options...] <roster TOML>
+
+random-standup is a tool for randomizing the order of team member updates in a
+standup meeting.
 
 Example:
 
@@ -50,21 +90,22 @@ Example:
     Niaj
     Ivan
     Mallory
-*/
-package main
 
-import (
-	"fmt"
-	"math/rand"
-	"os"
-	"sort"
-	"time"
-
-	"github.com/pelletier/go-toml"
-)
+Options:
+  --help (-h) Prints this message.
+`
 
 func main() {
-	file := os.Args[1]
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "%s\n", usage)
+
+	}
+	flag.Parse()
+	if flag.NArg() < 1 {
+		usageAndExit("")
+	}
+
+	file := flag.Arg(0)
 
 	roster, err := toml.LoadFile(file)
 	if err != nil {
@@ -105,4 +146,16 @@ func printShuffledList(teamMembers []string, teamName string) {
 	for _, name := range teamMembers {
 		fmt.Println(name)
 	}
+}
+
+// usageAndExit prints usage string and exits with nonzero code.
+func usageAndExit(msg string) {
+	if msg != "" {
+		fmt.Fprintf(os.Stderr, "%s\n", msg)
+		fmt.Fprintf(os.Stderr, "\n\n")
+	}
+
+	flag.Usage()
+	// fmt.Fprintf(os.Stderr, "\n")
+	os.Exit(1)
 }
