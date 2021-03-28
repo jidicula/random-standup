@@ -99,9 +99,6 @@ func standupOrder(roster *toml.Tree) string {
 	subteams := getSortedKeysWithMembers(roster)
 	for i, subteam := range subteams {
 		members := roster.GetArray(subteam + ".members")
-		if members == nil {
-			continue
-		}
 		shuffledTeam := shuffleTeam(members.([]string), subteam)
 		order += shuffledTeam
 
