@@ -44,21 +44,20 @@ members = []
 members = ["Alice", "Bob"]
 ["subteam 3"]`)
 
-	tests := []struct {
+	tests := map[string]struct {
 		roster *toml.Tree
 		want   []string
 	}{
 
-		{emptySubteams, []string{}},
-		{mixedSubteams, []string{"subteam 1", "subteam-2"}},
+		"empty subteams": {emptySubteams, []string{}},
+		"empty memberlist, full subteam, empty subteam": {mixedSubteams, []string{"subteam 1", "subteam-2"}},
 	}
 
-	for _, tt := range tests {
-		testname := tt.roster.String()
-		t.Run(testname, func(t *testing.T) {
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
 			got := getSortedKeysWithMembers(tt.roster)
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("got %s, want %s", got, tt.want)
+				t.Errorf("%s: got %s, want %s", name, got, tt.want)
 			}
 		})
 	}
