@@ -83,45 +83,65 @@ func main() {
 	roster, err := toml.LoadFile(file)
 	if err != nil {
 		fmt.Printf("Error %s\n", err.Error())
-		os.Exit(1)
+		os.Exit(2)
 	}
 
 	now := time.Now()
 	rand.Seed(now.UnixNano())
 
 	fmt.Printf("# %s\n", now.Format("2006-01-02"))
+	fmt.Printf("%s\n", standupOrder(roster))
+}
 
-	subteams := roster.Keys()
-	// Tree key order is not guaranteed, so slice of keys has to be sorted
-	// by key position in TOML
-	sort.Slice(subteams, func(i, j int) bool {
-		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
-	})
+// standupOrder returns the randomized standup order from a toml.Tree.
+func standupOrder(roster *toml.Tree) string {
+	var order string
+	subteams := getSortedKeys(roster)
 	for i, subteam := range subteams {
 		members := roster.GetArray(subteam + ".members")
 		if members == nil {
 			continue
 		}
-		printShuffledList(members.([]string), subteam)
+		shuffledTeam := shuffleTeam(members.([]string), subteam)
+		order += shuffledTeam
+
+		// TODO: runs on penultimate subteam if last subteam is empty
+		// Filter list of subteams for nonempty subteams?
 		if i != len(subteams)-1 {
-			fmt.Println()
+			order += "\n"
 		}
 	}
+	return order
 }
 
-// printShuffledList accepts a team's member list and name and prints a team's
-// name and a randomized list of its members to stdout.
-func printShuffledList(teamMembers []string, teamName string) {
+// getSortedKeys returns a slice of keys from the TOML sorted by their position
+// in the TOML.
+func getSortedKeys(roster *toml.Tree) []string {
+	subteams := roster.Keys()
+	// Tree key order is not guaranteed, so slice of keys has to be
+	// explicitly sorted
+	sort.Slice(subteams, func(i, j int) bool {
+		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
+	})
+	return subteams
+}
 
+// shuffleTeam accepts a team's member list and name and returns the
+// shuffled, stringified team list beginning with the team name.
+func shuffleTeam(teamMembers []string, teamName string) string {
+	list := ""
+	if len(teamMembers) == 0 {
+		return list
+	}
 	rand.Shuffle(len(teamMembers), func(i, j int) {
 		teamMembers[i], teamMembers[j] = teamMembers[j], teamMembers[i]
 	})
-
-	fmt.Printf("## %s\n", teamName)
+	list = fmt.Sprintf("## %s\n", teamName)
 
 	for _, name := range teamMembers {
-		fmt.Println(name)
+		list += name + "\n"
 	}
+	return list
 }
 
 // usageAndExit prints usage string and exits with nonzero code.

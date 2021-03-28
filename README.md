@@ -72,3 +72,5 @@ Mallory
 1. Clone and `cd` into the repo.
 2. `go build -v`
 3. `./random-standup example-roster.toml`
+
+You can run tests with `go test -v -cover`.
