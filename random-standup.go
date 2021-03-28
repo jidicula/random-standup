@@ -90,13 +90,13 @@ func main() {
 	rand.Seed(now.UnixNano())
 
 	fmt.Printf("# %s\n", now.Format("2006-01-02"))
-	fmt.Printf("%s\n", standupOrder(roster))
+	fmt.Printf("%s", standupOrder(roster))
 }
 
 // standupOrder returns the randomized standup order from a toml.Tree.
 func standupOrder(roster *toml.Tree) string {
 	var order string
-	subteams := getSortedKeys(roster)
+	subteams := getSortedKeysWithMembers(roster)
 	for i, subteam := range subteams {
 		members := roster.GetArray(subteam + ".members")
 		if members == nil {
@@ -105,8 +105,6 @@ func standupOrder(roster *toml.Tree) string {
 		shuffledTeam := shuffleTeam(members.([]string), subteam)
 		order += shuffledTeam
 
-		// TODO: runs on penultimate subteam if last subteam is empty
-		// Filter list of subteams for nonempty subteams?
 		if i != len(subteams)-1 {
 			order += "\n"
 		}
@@ -114,25 +112,29 @@ func standupOrder(roster *toml.Tree) string {
 	return order
 }
 
-// getSortedKeys returns a slice of keys from the TOML sorted by their position
-// in the TOML.
-func getSortedKeys(roster *toml.Tree) []string {
+// getSortedKeysWithMembers returns a slice of keys with members subkey from
+// the TOML sorted by their position in the TOML.
+func getSortedKeysWithMembers(roster *toml.Tree) []string {
 	subteams := roster.Keys()
 	// Tree key order is not guaranteed, so slice of keys has to be
 	// explicitly sorted
 	sort.Slice(subteams, func(i, j int) bool {
-		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
+		return roster.GetPosition(subteams[i]).Line <
+			roster.GetPosition(subteams[j]).Line
 	})
-	return subteams
+	cleanSubteams := []string{}
+	for _, name := range subteams {
+		if roster.GetArray(name+".members") != nil {
+			cleanSubteams = append(cleanSubteams, name)
+		}
+	}
+	return cleanSubteams
 }
 
 // shuffleTeam accepts a team's member list and name and returns the
 // shuffled, stringified team list beginning with the team name.
 func shuffleTeam(teamMembers []string, teamName string) string {
 	list := ""
-	if len(teamMembers) == 0 {
-		return list
-	}
 	rand.Shuffle(len(teamMembers), func(i, j int) {
 		teamMembers[i], teamMembers[j] = teamMembers[j], teamMembers[i]
 	})

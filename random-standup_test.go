@@ -30,7 +30,7 @@ func TestShuffleTeam(t *testing.T) {
 	}
 }
 
-func TestGetSortedKeys(t *testing.T) {
+func TestGetSortedKeysWithMembers(t *testing.T) {
 
 	emptySubteams, _ := toml.Load(`
 ["subteam 1"]
@@ -51,14 +51,14 @@ members = ["Alice", "Bob"]
 		want   []string
 	}{
 
-		{emptySubteams, []string{"subteam 1", "subteam-2", "subteam 3"}},
-		{mixedSubteams, []string{"subteam 1", "subteam-2", "subteam 3"}},
+		{emptySubteams, []string{}},
+		{mixedSubteams, []string{"subteam 1", "subteam-2"}},
 	}
 
 	for _, tt := range tests {
 		testname := tt.roster.String()
 		t.Run(testname, func(t *testing.T) {
-			output := getSortedKeys(tt.roster)
+			output := getSortedKeysWithMembers(tt.roster)
 			if !reflect.DeepEqual(output, tt.want) {
 				t.Errorf("got %s, want %s", output, tt.want)
 			}
@@ -88,6 +88,8 @@ members = ["Erin", "Frank", "Grace", "Heidi"]`
 ["Empty Subteam"]
 ` + "\n" + `["Subteam 2"]
 members = ["Erin", "Frank", "Grace", "Heidi"]`
+
+	onlyEmptySubteam := `["Empty Subteam"]`
 
 	var tests = []struct {
 		roster string
@@ -122,8 +124,7 @@ Heidi
 Grace
 Erin
 Frank
-
-`}, // trailing newline is workaround
+`},
 		{middleSubteamEmpty, `## Subteam-1
 Bob
 David
@@ -136,6 +137,7 @@ Grace
 Heidi
 Frank
 `},
+		{onlyEmptySubteam, ``},
 	}
 
 	for _, tt := range tests {
