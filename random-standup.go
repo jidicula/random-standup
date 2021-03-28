@@ -105,6 +105,8 @@ func standupOrder(roster *toml.Tree) string {
 		shuffledTeam := shuffleTeam(members.([]string), subteam)
 		order += shuffledTeam
 
+		// TODO: runs on penultimate subteam if last subteam is empty
+		// Filter list of subteams for nonempty subteams?
 		if i != len(subteams)-1 {
 			order += "\n"
 		}
@@ -127,11 +129,14 @@ func getSortedKeys(roster *toml.Tree) []string {
 // shuffleTeam accepts a team's member list and name and returns the
 // shuffled, stringified team list beginning with the team name.
 func shuffleTeam(teamMembers []string, teamName string) string {
-
+	list := ""
+	if len(teamMembers) == 0 {
+		return list
+	}
 	rand.Shuffle(len(teamMembers), func(i, j int) {
 		teamMembers[i], teamMembers[j] = teamMembers[j], teamMembers[i]
 	})
-	list := fmt.Sprintf("## %s\n", teamName)
+	list = fmt.Sprintf("## %s\n", teamName)
 
 	for _, name := range teamMembers {
 		list += name + "\n"
