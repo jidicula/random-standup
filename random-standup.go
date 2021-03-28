@@ -121,7 +121,8 @@ func getSortedKeys(roster *toml.Tree) []string {
 	// Tree key order is not guaranteed, so slice of keys has to be
 	// explicitly sorted
 	sort.Slice(subteams, func(i, j int) bool {
-		return roster.GetPosition(subteams[i]).Line < roster.GetPosition(subteams[j]).Line
+		return roster.GetPosition(subteams[i]).Line <
+			roster.GetPosition(subteams[j]).Line
 	})
 	return subteams
 }
