@@ -10,7 +10,7 @@ import (
 
 func TestShuffleTeam(t *testing.T) {
 
-	var tests = []struct {
+	tests := []struct {
 		teamMembers []string
 		teamName    string
 		want        string
@@ -46,7 +46,7 @@ members = []
 members = ["Alice", "Bob"]
 ["subteam 3"]`)
 
-	var tests = []struct {
+	tests := []struct {
 		roster *toml.Tree
 		want   []string
 	}{
@@ -91,7 +91,7 @@ members = ["Erin", "Frank", "Grace", "Heidi"]`
 
 	onlyEmptySubteam := `["Empty Subteam"]`
 
-	var tests = []struct {
+	tests := []struct {
 		roster string
 		want   string
 	}{
