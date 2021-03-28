@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -10,21 +9,20 @@ import (
 
 func TestShuffleTeam(t *testing.T) {
 
-	var tests = []struct {
+	tests := map[string]struct {
 		teamMembers []string
 		teamName    string
 		want        string
 	}{
-		{[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nAlice\nBob\nDavid\nCarol\n"},
+		"four names": {[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nAlice\nBob\nDavid\nCarol\n"},
 	}
 
-	for _, tt := range tests {
+	for name, tt := range tests {
 
-		testname := fmt.Sprintf("(%s, %s)", tt.teamMembers, tt.teamName)
-		t.Run(testname, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			got := shuffleTeam(tt.teamMembers, tt.teamName)
 			if got != tt.want {
-				t.Errorf("got %s, want %s", got, tt.want)
+				t.Errorf("%s: got %s, want %s", name, got, tt.want)
 			}
 		})
 	}
@@ -46,21 +44,20 @@ members = []
 members = ["Alice", "Bob"]
 ["subteam 3"]`)
 
-	var tests = []struct {
+	tests := map[string]struct {
 		roster *toml.Tree
 		want   []string
 	}{
 
-		{emptySubteams, []string{}},
-		{mixedSubteams, []string{"subteam 1", "subteam-2"}},
+		"empty subteams": {emptySubteams, []string{}},
+		"empty memberlist, full subteam, empty subteam": {mixedSubteams, []string{"subteam 1", "subteam-2"}},
 	}
 
-	for _, tt := range tests {
-		testname := tt.roster.String()
-		t.Run(testname, func(t *testing.T) {
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
 			got := getSortedKeysWithMembers(tt.roster)
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("got %s, want %s", got, tt.want)
+				t.Errorf("%s: got %s, want %s", name, got, tt.want)
 			}
 		})
 	}
@@ -91,17 +88,17 @@ members = ["Erin", "Frank", "Grace", "Heidi"]`
 
 	onlyEmptySubteam := `["Empty Subteam"]`
 
-	var tests = []struct {
+	tests := map[string]struct {
 		roster string
 		want   string
 	}{
-		{singleSubteam, `## Subteam-1
+		"1 subteam": {singleSubteam, `## Subteam-1
 Alice
 Carol
 David
 Bob
 `},
-		{subteamPair, `## Subteam-1
+		"2 subteams": {subteamPair, `## Subteam-1
 Bob
 Carol
 David
@@ -113,7 +110,7 @@ Grace
 Heidi
 Frank
 `},
-		{lastSubteamEmpty, `## Subteam-1
+		"2 full subteams, empty subteam": {lastSubteamEmpty, `## Subteam-1
 Carol
 David
 Bob
@@ -125,7 +122,7 @@ Grace
 Erin
 Frank
 `},
-		{middleSubteamEmpty, `## Subteam-1
+		"1 empty subteam between 2 full subteams": {middleSubteamEmpty, `## Subteam-1
 Bob
 David
 Alice
@@ -137,13 +134,11 @@ Grace
 Heidi
 Frank
 `},
-		{onlyEmptySubteam, ``},
+		"1 empty subteam": {onlyEmptySubteam, ``},
 	}
 
-	for _, tt := range tests {
-		testname := tt.roster
-
-		t.Run(testname, func(t *testing.T) {
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
 			rosterTree, _ := toml.Load(tt.roster)
 			got := standupOrder(rosterTree)
 			if got != tt.want {
