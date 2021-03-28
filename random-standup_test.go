@@ -22,9 +22,9 @@ func TestShuffleTeam(t *testing.T) {
 
 		testname := fmt.Sprintf("(%s, %s)", tt.teamMembers, tt.teamName)
 		t.Run(testname, func(t *testing.T) {
-			output := shuffleTeam(tt.teamMembers, tt.teamName)
-			if output != tt.want {
-				t.Errorf("got %s, want %s", output, tt.want)
+			got := shuffleTeam(tt.teamMembers, tt.teamName)
+			if got != tt.want {
+				t.Errorf("got %s, want %s", got, tt.want)
 			}
 		})
 	}
@@ -58,9 +58,9 @@ members = ["Alice", "Bob"]
 	for _, tt := range tests {
 		testname := tt.roster.String()
 		t.Run(testname, func(t *testing.T) {
-			output := getSortedKeysWithMembers(tt.roster)
-			if !reflect.DeepEqual(output, tt.want) {
-				t.Errorf("got %s, want %s", output, tt.want)
+			got := getSortedKeysWithMembers(tt.roster)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("got %s, want %s", got, tt.want)
 			}
 		})
 	}
@@ -145,9 +145,9 @@ Frank
 
 		t.Run(testname, func(t *testing.T) {
 			rosterTree, _ := toml.Load(tt.roster)
-			output := standupOrder(rosterTree)
-			if output != tt.want {
-				t.Errorf("got %s, want %s", output, tt.want)
+			got := standupOrder(rosterTree)
+			if got != tt.want {
+				t.Errorf("got %s, want %s", got, tt.want)
 			}
 		})
 	}
