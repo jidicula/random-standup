@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -10,21 +9,20 @@ import (
 
 func TestShuffleTeam(t *testing.T) {
 
-	tests := []struct {
+	tests := map[string]struct {
 		teamMembers []string
 		teamName    string
 		want        string
 	}{
-		{[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nAlice\nBob\nDavid\nCarol\n"},
+		"four names": {[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nAlice\nBob\nDavid\nCarol\n"},
 	}
 
-	for _, tt := range tests {
+	for name, tt := range tests {
 
-		testname := fmt.Sprintf("(%s, %s)", tt.teamMembers, tt.teamName)
-		t.Run(testname, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			got := shuffleTeam(tt.teamMembers, tt.teamName)
 			if got != tt.want {
-				t.Errorf("got %s, want %s", got, tt.want)
+				t.Errorf("%s: got %s, want %s", name, got, tt.want)
 			}
 		})
 	}
