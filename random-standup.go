@@ -90,7 +90,7 @@ func main() {
 	rand.Seed(now.UnixNano())
 
 	fmt.Printf("# %s\n", now.Format("2006-01-02"))
-	fmt.Printf("%s\n", standupOrder(roster))
+	fmt.Printf("%s", standupOrder(roster))
 }
 
 // standupOrder returns the randomized standup order from a toml.Tree.
