@@ -131,9 +131,6 @@ func getSortedKeys(roster *toml.Tree) []string {
 // shuffled, stringified team list beginning with the team name.
 func shuffleTeam(teamMembers []string, teamName string) string {
 	list := ""
-	if len(teamMembers) == 0 {
-		return list
-	}
 	rand.Shuffle(len(teamMembers), func(i, j int) {
 		teamMembers[i], teamMembers[j] = teamMembers[j], teamMembers[i]
 	})
