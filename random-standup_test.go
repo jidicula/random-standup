@@ -88,17 +88,17 @@ members = ["Erin", "Frank", "Grace", "Heidi"]`
 
 	onlyEmptySubteam := `["Empty Subteam"]`
 
-	tests := []struct {
+	tests := map[string]struct {
 		roster string
 		want   string
 	}{
-		{singleSubteam, `## Subteam-1
+		"1 subteam": {singleSubteam, `## Subteam-1
 Alice
 Carol
 David
 Bob
 `},
-		{subteamPair, `## Subteam-1
+		"2 subteams": {subteamPair, `## Subteam-1
 Bob
 Carol
 David
@@ -110,7 +110,7 @@ Grace
 Heidi
 Frank
 `},
-		{lastSubteamEmpty, `## Subteam-1
+		"2 full subteams, empty subteam": {lastSubteamEmpty, `## Subteam-1
 Carol
 David
 Bob
@@ -122,7 +122,7 @@ Grace
 Erin
 Frank
 `},
-		{middleSubteamEmpty, `## Subteam-1
+		"1 empty subteam between 2 full subteams": {middleSubteamEmpty, `## Subteam-1
 Bob
 David
 Alice
@@ -134,13 +134,11 @@ Grace
 Heidi
 Frank
 `},
-		{onlyEmptySubteam, ``},
+		"1 empty subteam": {onlyEmptySubteam, ``},
 	}
 
-	for _, tt := range tests {
-		testname := tt.roster
-
-		t.Run(testname, func(t *testing.T) {
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
 			rosterTree, _ := toml.Load(tt.roster)
 			got := standupOrder(rosterTree)
 			if got != tt.want {
