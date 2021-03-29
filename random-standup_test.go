@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math/rand"
 	"reflect"
 	"testing"
 
@@ -14,12 +15,13 @@ func TestShuffleTeam(t *testing.T) {
 		teamName    string
 		want        string
 	}{
-		"four names": {[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nAlice\nBob\nDavid\nCarol\n"},
+		"four names": {[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nCarol\nBob\nAlice\nDavid\n"},
 	}
 
 	for name, tt := range tests {
 
 		t.Run(name, func(t *testing.T) {
+			rand.Seed(0)
 			got := shuffleTeam(tt.teamMembers, tt.teamName)
 			if got != tt.want {
 				t.Errorf("%s: got %s, want %s", name, got, tt.want)
@@ -30,26 +32,34 @@ func TestShuffleTeam(t *testing.T) {
 
 func TestGetSortedKeysWithMembers(t *testing.T) {
 
-	emptySubteams, _ := toml.Load(`
+	emptySubteams, err := toml.Load(`
 ["subteam 1"]
 
 [subteam-2]
 
 ["subteam 3"]`)
+	if err != nil {
+		t.FailNow()
+	}
 
-	mixedSubteams, _ := toml.Load(`
+	var emptyStringSlice []string
+
+	mixedSubteams, err := toml.Load(`
 ["subteam 1"]
 members = []
 [subteam-2]
 members = ["Alice", "Bob"]
 ["subteam 3"]`)
+	if err != nil {
+		t.FailNow()
+	}
 
 	tests := map[string]struct {
 		roster *toml.Tree
 		want   []string
 	}{
 
-		"empty subteams": {emptySubteams, []string{}},
+		"empty subteams": {emptySubteams, emptyStringSlice},
 		"empty memberlist, full subteam, empty subteam": {mixedSubteams, []string{"subteam 1", "subteam-2"}},
 	}
 
@@ -93,53 +103,57 @@ members = ["Erin", "Frank", "Grace", "Heidi"]`
 		want   string
 	}{
 		"1 subteam": {singleSubteam, `## Subteam-1
-Alice
 Carol
-David
 Bob
+Alice
+David
 `},
 		"2 subteams": {subteamPair, `## Subteam-1
-Bob
 Carol
-David
+Bob
 Alice
+David
 
 ## Subteam 2
-Erin
 Grace
 Heidi
 Frank
+Erin
 `},
 		"2 full subteams, empty subteam": {lastSubteamEmpty, `## Subteam-1
 Carol
-David
 Bob
 Alice
+David
 
 ## Subteam 2
-Heidi
 Grace
-Erin
+Heidi
 Frank
+Erin
 `},
 		"1 empty subteam between 2 full subteams": {middleSubteamEmpty, `## Subteam-1
-Bob
-David
-Alice
 Carol
+Bob
+Alice
+David
 
 ## Subteam 2
-Erin
 Grace
 Heidi
 Frank
+Erin
 `},
 		"1 empty subteam": {onlyEmptySubteam, ``},
 	}
 
 	for name, tt := range tests {
+		rand.Seed(0)
 		t.Run(name, func(t *testing.T) {
-			rosterTree, _ := toml.Load(tt.roster)
+			rosterTree, err := toml.Load(tt.roster)
+			if err != nil {
+				t.FailNow()
+			}
 			got := standupOrder(rosterTree)
 			if got != tt.want {
 				t.Errorf("got %s, want %s", got, tt.want)
