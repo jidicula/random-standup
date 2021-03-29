@@ -32,21 +32,27 @@ func TestShuffleTeam(t *testing.T) {
 
 func TestGetSortedKeysWithMembers(t *testing.T) {
 
-	emptySubteams, _ := toml.Load(`
+	emptySubteams, err := toml.Load(`
 ["subteam 1"]
 
 [subteam-2]
 
 ["subteam 3"]`)
+	if err != nil {
+		t.FailNow()
+	}
 
 	var emptyStringSlice []string
 
-	mixedSubteams, _ := toml.Load(`
+	mixedSubteams, err := toml.Load(`
 ["subteam 1"]
 members = []
 [subteam-2]
 members = ["Alice", "Bob"]
 ["subteam 3"]`)
+	if err != nil {
+		t.FailNow()
+	}
 
 	tests := map[string]struct {
 		roster *toml.Tree
@@ -144,7 +150,10 @@ Erin
 	for name, tt := range tests {
 		rand.Seed(0)
 		t.Run(name, func(t *testing.T) {
-			rosterTree, _ := toml.Load(tt.roster)
+			rosterTree, err := toml.Load(tt.roster)
+			if err != nil {
+				t.FailNow()
+			}
 			got := standupOrder(rosterTree)
 			if got != tt.want {
 				t.Errorf("got %s, want %s", got, tt.want)
