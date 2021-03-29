@@ -1,7 +1,7 @@
 linters-settings:
-  gofmt:
+  goimports:
     simplify: true
 
 linters:
   enable:
-    - gofmt
+    - goimports
