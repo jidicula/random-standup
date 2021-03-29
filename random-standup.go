@@ -151,6 +151,5 @@ func usageAndExit(msg string) {
 	}
 
 	flag.Usage()
-	// fmt.Fprintf(os.Stderr, "\n")
 	os.Exit(1)
 }
