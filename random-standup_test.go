@@ -97,10 +97,10 @@ members = ["Erin", "Frank", "Grace", "Heidi"]`
 		want   string
 	}{
 		"1 subteam": {singleSubteam, `## Subteam-1
-Alice
 Carol
-David
 Bob
+Alice
+David
 `},
 		"2 subteams": {subteamPair, `## Subteam-1
 Carol
