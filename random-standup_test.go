@@ -103,16 +103,16 @@ David
 Bob
 `},
 		"2 subteams": {subteamPair, `## Subteam-1
-Bob
 Carol
-David
+Bob
 Alice
+David
 
 ## Subteam 2
-Erin
 Grace
 Heidi
 Frank
+Erin
 `},
 		"2 full subteams, empty subteam": {lastSubteamEmpty, `## Subteam-1
 Carol
