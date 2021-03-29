@@ -119,7 +119,7 @@ func getSortedKeysWithMembers(roster *toml.Tree) []string {
 		return roster.GetPosition(subteams[i]).Line <
 			roster.GetPosition(subteams[j]).Line
 	})
-	cleanSubteams := []string{}
+	var cleanSubteams []string
 	for _, name := range subteams {
 		if roster.GetArray(name+".members") != nil {
 			cleanSubteams = append(cleanSubteams, name)
