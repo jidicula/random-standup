@@ -37,6 +37,8 @@ func TestGetSortedKeysWithMembers(t *testing.T) {
 
 ["subteam 3"]`)
 
+	var emptyStringSlice []string
+
 	mixedSubteams, _ := toml.Load(`
 ["subteam 1"]
 members = []
@@ -49,7 +51,7 @@ members = ["Alice", "Bob"]
 		want   []string
 	}{
 
-		"empty subteams": {emptySubteams, []string{}},
+		"empty subteams": {emptySubteams, emptyStringSlice},
 		"empty memberlist, full subteam, empty subteam": {mixedSubteams, []string{"subteam 1", "subteam-2"}},
 	}
 
