@@ -15,7 +15,7 @@ func TestShuffleTeam(t *testing.T) {
 		teamName    string
 		want        string
 	}{
-		"four names": {[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nAlice\nBob\nDavid\nCarol\n"},
+		"four names": {[]string{"Alice", "Bob", "Carol", "David"}, "Subteam 1", "## Subteam 1\nCarol\nBob\nAlice\nDavid\n"},
 	}
 
 	for name, tt := range tests {
