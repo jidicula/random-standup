@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math/rand"
 	"reflect"
 	"testing"
 
@@ -20,6 +21,7 @@ func TestShuffleTeam(t *testing.T) {
 	for name, tt := range tests {
 
 		t.Run(name, func(t *testing.T) {
+			rand.Seed(0)
 			got := shuffleTeam(tt.teamMembers, tt.teamName)
 			if got != tt.want {
 				t.Errorf("%s: got %s, want %s", name, got, tt.want)
@@ -140,6 +142,7 @@ Frank
 	}
 
 	for name, tt := range tests {
+		rand.Seed(0)
 		t.Run(name, func(t *testing.T) {
 			rosterTree, _ := toml.Load(tt.roster)
 			got := standupOrder(rosterTree)
