@@ -127,16 +127,16 @@ Frank
 Erin
 `},
 		"1 empty subteam between 2 full subteams": {middleSubteamEmpty, `## Subteam-1
-Bob
-David
-Alice
 Carol
+Bob
+Alice
+David
 
 ## Subteam 2
-Erin
 Grace
 Heidi
 Frank
+Erin
 `},
 		"1 empty subteam": {onlyEmptySubteam, ``},
 	}
