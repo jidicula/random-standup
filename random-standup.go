@@ -95,7 +95,7 @@ func main() {
 
 // standupOrder returns the randomized standup order from a toml.Tree.
 func standupOrder(roster *toml.Tree) string {
-	var order string
+	order := ""
 	subteams := getSortedKeysWithMembers(roster)
 	for i, subteam := range subteams {
 		members := roster.GetArray(subteam + ".members")
