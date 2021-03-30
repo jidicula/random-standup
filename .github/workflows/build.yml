@@ -81,10 +81,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Get OS info
+      - name: Get OS and arch info
         run: |
-          BINARY_NAME=${{github.repository}}-${MATRIX_GOOSARCH#*/}-${MATRIX_GOOSARCH%/*}
+          GOOSARCH=${{matrix.goosarch}}
+          GOOS=${GOOSARCH%/*}
+          GOARCH=${GOOSARCH#*/}
+          BINARY_NAME=${{github.repository}}-$GOOS-$GOARCH
           echo "BINARY_NAME=$BINARY_NAME" >> $GITHUB_ENV
+          echo "GOOS=$GOOS" >> $GITHUB_ENV
+          echo "GOARCH=$GOARCH" >> $GITHUB_ENV
       - name: Build
         run: |
           go build -o "$BINARY_NAME" -v
