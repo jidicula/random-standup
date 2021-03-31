@@ -15,7 +15,7 @@ You can sponsor me [here](https://github.com/sponsors/jidicula)!
 
 ## Usage
 
-1. Get the tool with `go install github.com/jidicula/random-standup@latest` or grab a binary for your OS and arch [here](https://github.com/jidicula/random-standup/releases/latest).
+1. Get the tool with `go install github.com/jidicula/random-standup@latest` or grab a binary for your OS and arch [here](https://github.com/jidicula/random-standup/releases/latest). The full list of supported OS/arch pairs is available [here](https://github.com/jidicula/random-standup/blob/main/.github/workflows/build.yml#L42-L86).
 
 2. Create a team roster in a TOML file, following the format in
 `example-roster.toml`:
