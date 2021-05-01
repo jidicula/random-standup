@@ -71,11 +71,11 @@ Options:
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "%s\n", usage)
-
 	}
 	flag.Parse()
 	if flag.NArg() < 1 {
-		usageAndExit("")
+		flag.Usage()
+		os.Exit(1)
 	}
 
 	file := flag.Arg(0)
@@ -141,15 +141,4 @@ func shuffleTeam(teamMembers []string, teamName string) string {
 		list += name + "\n"
 	}
 	return list
-}
-
-// usageAndExit prints usage string and exits with nonzero code.
-func usageAndExit(msg string) {
-	if msg != "" {
-		fmt.Fprintf(os.Stderr, "%s\n", msg)
-		fmt.Fprintf(os.Stderr, "\n\n")
-	}
-
-	flag.Usage()
-	os.Exit(1)
 }
