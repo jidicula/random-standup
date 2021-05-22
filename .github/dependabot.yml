@@ -4,9 +4,12 @@ updates:
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
-    interval: daily
+    interval: "weekly"
+    day: "saturday"
     time: "06:00"
     timezone: "America/Toronto"
+  reviewers:
+    - "jidicula"
   open-pull-requests-limit: 99
   commit-message:
     prefix: "build: "
@@ -14,6 +17,10 @@ updates:
   directory: "/"
   schedule:
     interval: weekly
+    day: "saturday"
+    time: "06:00"
+    timezone: "America/Toronto"
+  reviewers:
+    - "jidicula"
   commit-message:
     prefix: "build: "
-
