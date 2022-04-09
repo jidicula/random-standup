@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: '1.16.4'
+          check-latest: true
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
@@ -32,6 +33,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: '1.16.4'
+          check-latest: true
       - run: go test -v -cover
   release:
     name: Create Release
@@ -92,6 +94,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: '1.16.4'
+          check-latest: true
       - name: Get OS and arch info
         run: |
           GOOSARCH=${{matrix.goosarch}}
